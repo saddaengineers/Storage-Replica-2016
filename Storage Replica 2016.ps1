@@ -1,0 +1,5 @@
+﻿Add-windowsfeature fs-fileserver,storage-replica,RSAT-Storage-Replica,RSAT-Storage-Replica
+Get-Command -Module storagereplica
+Test-SRTopology -SourceComputerName "nas03.saddaengineers.com" -SourceVolumeName "e:" -SourceLogVolumeName "f:" -DestinationComputerName "nas04.saddaengineers.com" -DestinationVolumeName "e:" -DestinationLogVolumeName "f:" -DurationInMinutes 15 -ResultPath "c:\temp" -Verbose -IgnorePerfTests
+New-SRPartnership -SourceComputerName "nas03.saddaengineers.com" -SourceRGName "ReplicationGroup01" -SourceVolumeName "e:" -SourceLogVolumeName "f:" -DestinationComputerName "nas04.saddaengineers.com" -DestinationRGName "ReplicationGroup02" -DestinationVolumeName "e:" -DestinationLogVolumeName "f:" -Verbose
+Set-SRPartnership –NewSourceComputerName nas04.saddaengineers.com –SourceRGName ReplicationGroup02 –DestinationComputerName nas03.saddaengineers.com –DestinationRGName ReplicationGroup01 –confirm:$false
